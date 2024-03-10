@@ -10,6 +10,30 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from .serializers import ExerciseSerializer, WorkoutPlanSerializer, TrackingSerializer, GoalSerializer
+from .models import Exercise, WorkoutPlan, Tracking, Goal
+from rest_framework import viewsets
+
+
+class ExerciseViewSet(viewsets.ModelViewSet):
+    queryset = Exercise.objects.all()
+    serializer_class = ExerciseSerializer
+    #permission_classes = [IsAuthenticated]
+
+class WorkoutPlanViewSet(viewsets.ModelViewSet):
+    queryset = WorkoutPlan.objects.all()
+    serializer_class = WorkoutPlanSerializer
+    #permission_classes = [IsAuthenticated]
+
+class TrackingViewSet(viewsets.ModelViewSet):
+    queryset = Tracking.objects.all()
+    serializer_class = TrackingSerializer
+    #permission_classes = [IsAuthenticated]
+
+class GoalViewSet(viewsets.ModelViewSet):
+    queryset = Goal.objects.all()
+    serializer_class = GoalSerializer
+    permission_classes = [IsAuthenticated]
 
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER

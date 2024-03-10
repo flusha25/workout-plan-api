@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+# dis modl represents  type of phisical activity
 class Exercise(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -9,17 +10,19 @@ class Exercise(models.Model):
 
     def __str__(self):
         return self.name
-
+    
+# here is model represent a plan for phisical activities
 class WorkoutPlan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     workout_frequency = models.CharField(max_length=50)
     goals = models.ManyToManyField('Goal')
-    exercises = models.ManyToManyField(Exercise, through='WorkoutPlanExercise')
+    exercises = models.ManyToManyField(Exercise, through='WorkoutPlanExercise')#  activities included in this plan
 
     def __str__(self):
         return self.name
-
+    
+# dis model represent a specific activity in a workout plan
 class WorkoutPlanExercise(models.Model):
     workout_plan = models.ForeignKey(WorkoutPlan, on_delete=models.CASCADE)
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
