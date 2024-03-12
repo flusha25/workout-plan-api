@@ -45,7 +45,7 @@ Your Django project provides the following API endpoints:
   - `GET /api/swagger/` - Swagger UI for API documentation.
 
 - **API Endpoints:**  
-  - `/api/exercises/` - CRUD operations for exercises.
+  - `/api/exercises/` - GET methods  for exercises.
   - `/api/workout-plans/` - CRUD operations for workout plans.
   - `/api/goals/` - CRUD operations for goals.
 
