@@ -20,9 +20,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 
 class GoalSerializer(serializers.ModelSerializer):
+    name = serializers.CharField()
     class Meta:
         model = Goal
-        fields = ['id', 'name']
+        fields = ['name']
 
 
 class ExerciseSerializer(serializers.ModelSerializer):
@@ -37,6 +38,7 @@ class WorkoutPlanExerciseSerializer(serializers.ModelSerializer):
         model = WorkoutPlanExercise
         fields = ['exercise', 'repetitions', 'sets', 'duration', 'distance']
 class WorkoutPlanSerializer(serializers.ModelSerializer):
+    goals = GoalSerializer(many=True, required=False)
     exercises = WorkoutPlanExerciseSerializer(many=True, source='workoutplanexercise_set')
 
     class Meta:
@@ -48,20 +50,30 @@ class WorkoutPlanSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         user = request.user if request and hasattr(request, 'user') else None
         validated_data['user'] = user
-        exercises_data = validated_data.pop('workoutplanexercise_set')
-        goals_data = validated_data.pop('goals')
+
+        # Handle goal data
+        goals_data = validated_data.pop('goals', [])
+        goals = []
+        for goal_data in goals_data:
+            goal_name = goal_data.get('name')
+            if goal_name:
+                goal, created = Goal.objects.get_or_create(name=goal_name)
+                goals.append(goal)
+
+        exercises_data = validated_data.pop('workoutplanexercise_set', [])
+
         workout_plan = WorkoutPlan.objects.create(**validated_data)
-        workout_plan.goals.set(goals_data)
+
+        # Add goals to the newly created workout plan
+        workout_plan.goals.set(goals)
 
         for exercise_data in exercises_data:
-            exercise_info = exercise_data.get('exercise', {})  # Get the nested dictionary under 'exercise'
+            exercise_info = exercise_data.pop('exercise', {})  # Get the nested dictionary under 'exercise'
             exercise_name = exercise_info.get('name')  # Get the value of the 'name' key
             if not exercise_name:
                 raise serializers.ValidationError("Exercise name not provided.")
-            exercise = Exercise.objects.filter(name=exercise_name).first()
-            if not exercise:
-                raise serializers.ValidationError(f"Exercise with name '{exercise_name}' does not exist.")
-            
+            exercise, created = Exercise.objects.get_or_create(name=exercise_name, defaults=exercise_info)
+
             # Remove the exercise key from exercise_data before passing it to create()
             exercise_data.pop('exercise', None)
 
