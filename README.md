@@ -69,19 +69,27 @@ For creating a new workout plan, use the following JSON format in your POST requ
 
 ```json
 {
+    "user": 1,
     "name": "My Workout Plan",
     "workout_frequency": "3 times a week",
-    "goals": [1, 2],
+    "goals": [
+        1,
+        2
+    ],
     "exercises": [
         {
-            "exercise_name": "Exercise 1",
+            "exercise": {
+                "name": "Exercise 1"
+            },
             "repetitions": 10,
             "sets": 3,
             "duration": "00:30:00",
             "distance": 5.0
         },
         {
-            "exercise_name": "Exercise 2",
+            "exercise": {
+                "name": "Exercise 2"
+            },
             "repetitions": 12,
             "sets": 4,
             "duration": "00:25:00",
