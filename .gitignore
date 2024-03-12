@@ -1,28 +1,18 @@
-# Python-specific
+
 *.pyc
 *.pyo
 __pycache__/
 *.py[cod]
-
-# Virtual environment
 venv/
 env/
-
-# IDE/Editor specific
 .idea/
 .vscode/
-
-# Temporary files
 *.swp
 *~
-
-# Compiled files
 *.dll
 *.exe
 *.pdb
 *.so
 *.dylib
-
-# OS-specific files
 .DS_Store
 Thumbs.db

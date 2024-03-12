@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-
+from fitness.models import Exercise
 
 class Command(BaseCommand):
     help = 'Populate Exercise model with predefined exercises'
@@ -145,31 +145,6 @@ class Command(BaseCommand):
                 'target_muscles': 'Lower abdominals'
             },
         ]
-
         for exercise_data in exercises_data:
             exercise = Exercise.objects.create(**exercise_data)
             self.stdout.write(self.style.SUCCESS(f'Exercise created: {exercise}'))
-
-# fitness/management/commands/insert_goals.py
-import json
-from django.core.management.base import BaseCommand
-from fitness.models import Exercise, Goal
-
-class Command(BaseCommand):
-    help = 'Inserts goals from JSON data into the database'
-
-    def handle(self, *args, **options):
-        goals_data = [
-            {"name": "Muscle Building", "description": "Users may have a goal to increase muscle mass and strength in specific muscle groups."},
-            {"name": "Weight Loss", "description": "Users may aim to lose weight and reduce body fat percentage."},
-            {"name": "Endurance Training", "description": "Users may want to improve cardiovascular endurance and stamina for activities like running or cycling."},
-            {"name": "Flexibility Improvement", "description": "Users may focus on increasing flexibility and mobility through stretching exercises."},
-            {"name": "Functional Strength", "description": "Users may prioritize exercises that improve functional strength for daily activities."},
-            {"name": "Sports-Specific Training", "description": "Users may have goals related to enhancing performance in a specific sport or activity."},
-            {"name": "Injury Rehabilitation", "description": "Users recovering from injuries may have rehabilitation goals to regain strength and mobility."}
-        ]
-
-        for goal_data in goals_data:
-            Goal.objects.create(name=goal_data['name'], description=goal_data['description'])
-
-        self.stdout.write(self.style.SUCCESS('Goals inserted successfully'))
