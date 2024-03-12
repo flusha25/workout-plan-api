@@ -35,9 +35,6 @@ Your Django project provides the following API endpoints:
 - **Token Refresh:**  
   - `POST /api/token/refresh/` - Refresh the access token using the refresh token.
 
-- **Test View:**  
-  - `GET /api/test/` - A test view.
-
 - **Workout Plan Exercises:**  
   - `GET /api/workout-plan-exercises/` - Get workout plan exercises.
 
