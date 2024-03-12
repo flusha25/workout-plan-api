@@ -28,7 +28,7 @@ class GoalSerializer(serializers.ModelSerializer):
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
-        fields = '__all__'
+        fields = ['name']
 
 class WorkoutPlanExerciseSerializer(serializers.ModelSerializer):
     exercise = ExerciseSerializer()
@@ -75,6 +75,9 @@ class TrackingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tracking
         fields = ['id', 'user', 'recorded_date', 'weight']
+
+
+
 
 
 
