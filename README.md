@@ -14,7 +14,11 @@ project is for customers to help tham to make workout plans
    .\venv\Scripts\activate
 4. Install Dependencies:
    pip install -r requirements.txt
-5. Run Development Server:
+5. migrate data:
+   python manage.py migrate
+6. populate exericses in to schema:
+   python manage.py populate_exercises    
+8. Run Development Server:
    python manage.py runserver
 
 ## Usage
