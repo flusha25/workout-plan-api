@@ -16,3 +16,4 @@ env/
 *.dylib
 .DS_Store
 Thumbs.db
+*.sqlite3
